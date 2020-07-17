@@ -1,15 +1,17 @@
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.junit.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Reporter;
+import org.testng.Assert;
 
 import java.util.Random;
 
 class Lists {
 	
 	WebDriver driver;
+	WebDriverWait wait;
 	
 	@FindBy(xpath = "//a[contains(@href,'/lists')]")
 	WebElement listsMenu;
@@ -59,7 +61,7 @@ class Lists {
 	@FindBy(xpath = "//ul[@id='sort_by_listbox']/child::li[@data-offset-index='7']")
 	WebElement sortSelector_titledesc;
 	
-	@FindBy(xpath = "//input[@value='Continue']")
+	@FindBy(xpath = "//form[@id='list_info']/child::input[@type='submit']")
 	WebElement submitButton;
 	
 	@FindBy(xpath = "//input[@id='list_item_search']")
@@ -70,6 +72,9 @@ class Lists {
 	
 	@FindBy(xpath = "//li[@data-offset-index='0']")
 	WebElement searchResult;
+	
+	@FindBy(xpath = "//div[contains(@class, 'notification success')]")
+	WebElement successPopup;
 	
 	@FindBy(xpath = "//li/child::a[contains(@href, 'step_1')]")
 	WebElement editList;
@@ -87,6 +92,7 @@ class Lists {
 	WebElement deleteConfirmButton;
 	
 	static String[] films = {"The Shawshank Redemption", "The Godfather", "The Godfather: Part II", "The Dark Knight", "12 Angry Men", "Schindler's List", "Pulp Fiction", "The Lord of the Rings: The Return of the King", "Fight Club", "The Lord of the Rings: The Fellowship of the Ring", "Forrest Gump", "Star Wars: The Empire Strikes Back", "Inception", "The Lord of the Rings: The Two Towers", "One Flew Over The Cuckoo's Nest", "GoodFellas", "The Matrix", "Seven Samura", "Star Wars", "City of God", "Se7en", "The Silence of the Lambs", "It's A Wonderful Life", "The Usual Suspects", "Saving Private Ryan", "Spirited Awa", "Coco", "American History X", "Interstellar", "The Green Mile", "Psycho", "Casablanca", "City Lights", "Intouchables", "Modern Times", "The Pianist", "Raiders of the Lost Ark", "The Departed", "Rear Window", "Terminator 2: Judgment Day", "Back to the Future", "Whiplash", "Gladiator", "The Lion King", "The Prestige", "Memento", "Apocalypse Now", "Alien", "The Great Dictator", "Sunset Boulevard"};
+	static String[] listDesc = {"Description for ", "The description for ", "Simple description for ", "Descriptive description for "};
 	
 	static int listCount = 1;
 	static Random r = new Random();
@@ -102,63 +108,80 @@ class Lists {
 
 	public void openLists() {
 		
-		Assert.assertTrue("Link to the Lists page was not found.", listsMenu.isDisplayed());
+		Assert.assertTrue(listsMenu.isDisplayed(), "Error: Lists page link was not found.");
 		listsMenu.click();
+		
+		Reporter.log("Going to Lists page.");
 		
 	}
 
 	public void createList() {
 		
-		Assert.assertTrue("New List button was not found.", newListButton.isDisplayed());
+		Assert.assertTrue(newListButton.isDisplayed(), "Error: New List button was not found.");
 		newListButton.click();
 		
-		Assert.assertTrue("List Name input was not found.", nameInput.isDisplayed());
-		nameInput.sendKeys("myList"+listCount);
+		Reporter.log("Creating a new list.");
 		
-		Assert.assertTrue("List Description input was not found.", descriptionInput.isDisplayed());
-		descriptionInput.sendKeys("Description for My List "+listCount);
+		int lst = r.nextInt(listDesc.length-1);
 		
-		Assert.assertTrue("Public/Private selector was not found.", publicSelector.isDisplayed());
+		Assert.assertTrue(nameInput.isDisplayed(), "Error: List Name input was not found.");
+		nameInput.sendKeys("myList"+(lst+1));
+		
+		Reporter.log("Naming the list: myList"+(lst+1));
+		
+		Assert.assertTrue(descriptionInput.isDisplayed(), "Error: List Description input was not found.");
+		String description = listDesc[lst]+"My List ";
+		descriptionInput.sendKeys(description+(lst+1));
+		
+		Reporter.log("Giving the list the description: "+description+(lst+1));
+		
+		Assert.assertTrue(publicSelector.isDisplayed(), "Error: Public/Private selector was not found.");
 		publicSelector.click();
 		
-		Assert.assertTrue("Private option was not found.", publicSelector_private.isDisplayed());
-		Assert.assertTrue("Public option was not found.", publicSelector_public.isDisplayed());
+		
+		Assert.assertTrue(publicSelector_private.isDisplayed(), "Error: Private option was not found.");
+		Assert.assertTrue(publicSelector_public.isDisplayed(), "Error: Public option was not found.");
 		
 		int rad = r.nextInt(1);
 		
 		switch(rad) {
-			case 0: publicSelector_private.click(); break;
-			case 1: publicSelector_public.click(); break;
+			case 0: publicSelector_private.click(); Reporter.log("Making the list private."); break;
+			case 1: publicSelector_public.click(); Reporter.log("Making the list public."); break;
 		}
 		
-		Assert.assertTrue("Ascending/Descending sort selector was not found.", sortSelector.isDisplayed());
+		Assert.assertTrue(sortSelector.isDisplayed(), "Error: Ascending/Descending sort selector was not found.");
 		sortSelector.click();
 		
-		Assert.assertTrue("Original ascending sort option was not found.", sortSelector_originasc.isDisplayed());
-		Assert.assertTrue("Original descending sort option was not found.", sortSelector_origindesc.isDisplayed());
-		Assert.assertTrue("Rating ascending sort option was not found.", sortSelector_voteasc.isDisplayed());
-		Assert.assertTrue("Rating descending sort was not found.", sortSelector_votedesc.isDisplayed());
-		Assert.assertTrue("Release ascending sort option was not found.", sortSelector_relasc.isDisplayed());
-		Assert.assertTrue("Release descending sort option was not found.", sortSelector_reldesc.isDisplayed());
-		Assert.assertTrue("Title ascending sort option was not found.", sortSelector_titleasc.isDisplayed());
-		Assert.assertTrue("Title descending sort was not found.", sortSelector_titledesc.isDisplayed());
+		Assert.assertTrue(sortSelector_originasc.isDisplayed(), "Error: Original ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_origindesc.isDisplayed(), "Error: Original descending sort option was not found.");
+		Assert.assertTrue(sortSelector_voteasc.isDisplayed(), "Error: Rating ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_votedesc.isDisplayed(), "Error: Rating descending sort was not found.");
+		Assert.assertTrue(sortSelector_relasc.isDisplayed(), "Error: Release ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_reldesc.isDisplayed(), "Error: Release descending sort option was not found.");
+		Assert.assertTrue(sortSelector_titleasc.isDisplayed(), "Error: Title ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_titledesc.isDisplayed(), "Error: Title descending sort was not found.");
 		
 		rad = r.nextInt(7);
 		
 		switch(rad) {
-			case 0: sortSelector_originasc.click(); break;
-			case 1: sortSelector_origindesc.click(); break;
-			case 2: sortSelector_voteasc.click(); break;
-			case 3: sortSelector_votedesc.click(); break;
-			case 4: sortSelector_relasc.click(); break;
-			case 5: sortSelector_reldesc.click(); break;
-			case 6: sortSelector_titleasc.click(); break;
-			case 7: sortSelector_titledesc.click(); break;
+			case 0: sortSelector_originasc.click(); Reporter.log("Sorting the list order by: orginal ascending"); break;
+			case 1: sortSelector_origindesc.click(); Reporter.log("Sorting the list order by: orginal descending"); break;
+			case 2: sortSelector_voteasc.click(); Reporter.log("Sorting the list order by: rating ascending"); break;
+			case 3: sortSelector_votedesc.click(); Reporter.log("Sorting the list order by: rating descending"); break;
+			case 4: sortSelector_relasc.click(); Reporter.log("Sorting the list order by: release ascending"); break;
+			case 5: sortSelector_reldesc.click(); Reporter.log("Sorting the list order by: release descending"); break;
+			case 6: sortSelector_titleasc.click(); Reporter.log("Sorting the list order by: title ascending"); break;
+			case 7: sortSelector_titledesc.click(); Reporter.log("Sorting the list order by: title descending"); break;
 			
 		}
 		
-		Assert.assertTrue("Continue button was not found.", submitButton.isDisplayed());
+		Assert.assertTrue(submitButton.isDisplayed(), "Error: Continue button was not found.");
 		submitButton.click();
+		
+		Reporter.log("Saving the list: myList"+(lst+1));
+		
+		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(deleteList));
 		
 		
 		listCount++;
@@ -168,10 +191,107 @@ class Lists {
 	
 	public void updateList() {
 		
+		Assert.assertTrue(editList.isDisplayed(), "Error: Edit List link was not found.");
+		editList.click();
+		
+		Assert.assertTrue(nameInput.isDisplayed(), "Error: List Name input was not found.");
+		String name = nameInput.getAttribute("value");
+		Reporter.log("Updating list: "+name);
+		
+		name = name.replace("myList", "myNewListName");
+		nameInput.clear();
+		nameInput.sendKeys(name);
+		Reporter.log("Changing the list title to: "+name);
+		
+		Assert.assertTrue(descriptionInput.isDisplayed(), "Error: List Description input was not found.");
+		String description = descriptionInput.getAttribute("innerHTML");
+		description = description.replace("Description for My List", "New description for My List");
+		descriptionInput.clear();
+		descriptionInput.sendKeys(description);
+		Reporter.log("Changing the list description to: "+description);
+		
+		Assert.assertTrue(publicSelector.isDisplayed(), "Error: Public/Private selector was not found.");
+		publicSelector.click();
+		
+		Assert.assertTrue(publicSelector_private.isDisplayed(), "Error: Private option was not found.");
+		Assert.assertTrue(publicSelector_public.isDisplayed(), "Error: Public option was not found.");
+		
+		int rad = r.nextInt(1);
+		
+		switch(rad) {
+		case 0: publicSelector_private.click(); Reporter.log("Changing the list to private."); break;
+		case 1: publicSelector_public.click(); Reporter.log("Changing the list to public."); break;
+		}
+		
+		Assert.assertTrue(sortSelector.isDisplayed(), "Error: Ascending/Descending sort selector was not found.");
+		sortSelector.click();
+		
+		Assert.assertTrue(sortSelector_originasc.isDisplayed(), "Error: Original ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_origindesc.isDisplayed(), "Error: Original descending sort option was not found.");
+		Assert.assertTrue(sortSelector_voteasc.isDisplayed(), "Error: Rating ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_votedesc.isDisplayed(), "Error: Rating descending sort was not found.");
+		Assert.assertTrue(sortSelector_relasc.isDisplayed(), "Error: Release ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_reldesc.isDisplayed(), "Error: Release descending sort option was not found.");
+		Assert.assertTrue(sortSelector_titleasc.isDisplayed(), "Error: Title ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_titledesc.isDisplayed(), "Error: Title descending sort was not found.");
+		
+		rad = r.nextInt(7);
+		
+		switch(rad) {
+		case 0: sortSelector_originasc.click(); Reporter.log("Changing the list order to: orginal ascending"); break;
+		case 1: sortSelector_origindesc.click(); Reporter.log("Changing the list order to: orginal descending"); break;
+		case 2: sortSelector_voteasc.click(); Reporter.log("Changing the list order to: rating ascending"); break;
+		case 3: sortSelector_votedesc.click(); Reporter.log("Changing the list order to: rating descending"); break;
+		case 4: sortSelector_relasc.click(); Reporter.log("Changing the list order to: release ascending"); break;
+		case 5: sortSelector_reldesc.click(); Reporter.log("Changing the list order to: release descending"); break;
+		case 6: sortSelector_titleasc.click(); Reporter.log("Changing the list order to: title ascending"); break;
+		case 7: sortSelector_titledesc.click(); Reporter.log("Changing the list order to: title descending"); break;
+			
+		}
+		
+		Assert.assertTrue(submitButton.isDisplayed(), "Error: Save button was not found.");
+		submitButton.click();
+		
+		Reporter.log("Saving changes to list: "+name);
+		
 	}
 	
 	public void addFilms() {
+				
+		Assert.assertTrue(searchInput.isDisplayed(), "Error: Input search bar was not found.");
 		
+		wait = new WebDriverWait(driver, 30);
+		
+		int rad = r.nextInt(11)+3;
+		Reporter.log("Adding "+rad+" new films to the list.");
+		
+		int[] indices = new int[rad];
+		int numOfFilms = films.length-1;
+		
+		for(int i=0; i<indices.length; i++) {
+			
+			rad = r.nextInt(numOfFilms);
+			while(numInArray(indices, rad, i)) {
+				rad = r.nextInt(numOfFilms);
+			}
+			
+			
+			searchInput.sendKeys(films[rad]);
+			
+			wait.until(ExpectedConditions.visibilityOf(searchResult));
+			
+			searchResult.click();
+			
+			wait.until(ExpectedConditions.visibilityOf(successPopup));
+			
+			Reporter.log("Film "+(i+1)+" to add: "+films[rad]+".");
+			
+			searchInput.clear();
+			
+			indices[i] = rad;
+		}
+		
+		Reporter.log("Completed adding films to the list.");
 		
 	}
 	
@@ -182,18 +302,31 @@ class Lists {
 	
 	public void deleteList() {
 		
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li/child::a[contains(@href, 'delete')]")));
+		Reporter.log("Deleting the film list.");
 		
-		
-		Assert.assertTrue("Link to the Delete List was not found.", deleteList.isDisplayed());
+		Assert.assertTrue(deleteList.isDisplayed(), "Error: Delete List link was not found.");
 		deleteList.click();
 		
-		Assert.assertTrue("Delete Button was not found.", deleteListButton.isDisplayed());
+		Assert.assertTrue(deleteListButton.isDisplayed(), "Error: Delete Button was not found.");
 		deleteListButton.click();
 		
-		Assert.assertTrue("Confirm Delete Button was not found.", deleteConfirmButton.isDisplayed());
+		Assert.assertTrue(deleteConfirmButton.isDisplayed(), "Error: Confirm Delete Button was not found.");
 		deleteConfirmButton.click();
+		
+		Reporter.log("Deleted the film list.");
+		
+		wait.until(ExpectedConditions.invisibilityOf(deleteConfirmButton));
+		
+	}
+	
+	public boolean numInArray(int[] arr, int num, int c) {
+		
+		for(int i=0; i<c; i++) {
+			if(arr[i]==num)
+				return true;
+		}
+		
+		return false;
 		
 	}
 

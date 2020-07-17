@@ -43,6 +43,8 @@ public class TestAutomation {
 		
 		myList.openLists();
 		myList.createList();
+		//myList.addFilms();
+		myList.updateList();
 		myList.deleteList();
 		
 		loginPage.logout();
