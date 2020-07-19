@@ -54,7 +54,7 @@ class Login {
 			
 			File credFile = new File("utilities/credentials");
 			
-			Reporter.log("Opening credentials file.");
+			Reporter.log("INFO: Opening credentials file.", true);
 			
 			Scanner credScanner = new Scanner(credFile);
 			
@@ -65,21 +65,21 @@ class Login {
 			username = username.replace(" ", "");
 			
 			Assert.assertNotNull("Username was not correctly retrieved from file.", username);
-			Reporter.log("Username successfully parsed.");
+			Reporter.log("INFO: Username successfully parsed: "+username, true);
 			
 			password = password.replace("password:", "");
 			password = password.replace(" ", "");
 			
 			Assert.assertNotNull("Password was not correctly retrieved from file.", password);
-			Reporter.log("Password successfully parsed.");
+			Reporter.log("INFO: Password successfully parsed.", true);
 			
 			credScanner.close();
 			
-			Reporter.log("Completed credentials acquisition.");
+			Reporter.log("INFO: Completed credentials acquisition.", true);
 			
 		} catch(FileNotFoundException e) {
 			
-			Reporter.log("Error: Credentials file was not found.");
+			Reporter.log("INFO: Error: Credentials file was not found.", true);
 			Assert.fail("Credentials file was not found.");
 			
 		}
@@ -95,37 +95,37 @@ class Login {
 	
 	public void login() {
 		
-		Assert.assertTrue(loginLink.isDisplayed(), "Error: Link to the Login Page was not found.");
+		Assert.assertTrue(loginLink.isDisplayed(), "ERROR: Link to the Login Page was not found.");
 		loginLink.click();
 		
-		Reporter.log("Logging into the portal.");
+		Reporter.log("INFO: Navigating to the login page.", true);
 		
-		Assert.assertTrue(usernameInput.isDisplayed(), "Error: Username input field was not found.");
+		Assert.assertTrue(usernameInput.isDisplayed(), "ERROR: Username input field was not found.");
 		usernameInput.sendKeys(username);
 		
-		Assert.assertTrue(passwordInput.isDisplayed(), "Error: Password input field was not found.");
+		Assert.assertTrue(passwordInput.isDisplayed(), "ERROR: Password input field was not found.");
 		passwordInput.sendKeys(password);
 		
-		Assert.assertTrue(loginButton.isDisplayed(), "Error: Login button was not found.");
+		Assert.assertTrue(loginButton.isDisplayed(), "ERROR: Login button was not found.");
 		loginButton.click();
 		
-		Reporter.log("Logged in as user: "+username);
+		Reporter.log("INFO: Logged in as user: "+username, true);
 	}
 	
 	public void logout() {
 		
-		Assert.assertTrue(userAvatar.isDisplayed(), "Error: User avatar/button was not found.");
+		Assert.assertTrue(userAvatar.isDisplayed(), "ERROR: User avatar/button was not found.");
 		userAvatar.click();
 		
-		Reporter.log("Logging out of the portal.");
+		Reporter.log("INFO: Navigationg to logout.", true);
 		
 		wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(userMenu));
     	
-    	Assert.assertTrue(logoutButton.isDisplayed(), "Error: Logout button was not found.");
+    	Assert.assertTrue(logoutButton.isDisplayed(), "ERROR: Logout button was not found.");
     	logoutButton.click();
     	
-    	Reporter.log("Logged out as user: "+username);
+    	Reporter.log("INFO: Logged out as user: "+username, true);
 		
 	}
 

@@ -108,77 +108,77 @@ class Lists {
 
 	public void openLists() {
 		
-		Assert.assertTrue(listsMenu.isDisplayed(), "Error: Lists page link was not found.");
+		Assert.assertTrue(listsMenu.isDisplayed(), "ERROR: Lists page link was not found.");
 		listsMenu.click();
 		
-		Reporter.log("Going to Lists page.");
+		Reporter.log("INFO: Navigating to Lists page.", true);
 		
 	}
 
 	public void createList() {
 		
-		Assert.assertTrue(newListButton.isDisplayed(), "Error: New List button was not found.");
+		Assert.assertTrue(newListButton.isDisplayed(), "ERROR: New List button was not found.");
 		newListButton.click();
 		
-		Reporter.log("Creating a new list.");
+		Reporter.log("INFO: Creating a new list.", true);
 		
 		int lst = r.nextInt(listDesc.length-1);
 		
-		Assert.assertTrue(nameInput.isDisplayed(), "Error: List Name input was not found.");
+		Assert.assertTrue(nameInput.isDisplayed(), "ERROR: List Name input was not found.");
 		nameInput.sendKeys("myList"+(lst+1));
 		
-		Reporter.log("Naming the list: myList"+(lst+1));
+		Reporter.log("INFO: Naming the list: myList"+(lst+1), true);
 		
-		Assert.assertTrue(descriptionInput.isDisplayed(), "Error: List Description input was not found.");
+		Assert.assertTrue(descriptionInput.isDisplayed(), "ERROR: List Description input was not found.");
 		String description = listDesc[lst]+"My List ";
 		descriptionInput.sendKeys(description+(lst+1));
 		
-		Reporter.log("Giving the list the description: "+description+(lst+1));
+		Reporter.log("INFO: Giving the list the description: "+description+(lst+1), true);
 		
-		Assert.assertTrue(publicSelector.isDisplayed(), "Error: Public/Private selector was not found.");
+		Assert.assertTrue(publicSelector.isDisplayed(), "ERROR: Public/Private selector was not found.");
 		publicSelector.click();
 		
 		
-		Assert.assertTrue(publicSelector_private.isDisplayed(), "Error: Private option was not found.");
-		Assert.assertTrue(publicSelector_public.isDisplayed(), "Error: Public option was not found.");
+		Assert.assertTrue(publicSelector_private.isDisplayed(), "ERROR: Private option was not found.");
+		Assert.assertTrue(publicSelector_public.isDisplayed(), "ERROR: Public option was not found.");
 		
 		int rad = r.nextInt(1);
 		
 		switch(rad) {
-			case 0: publicSelector_private.click(); Reporter.log("Making the list private."); break;
-			case 1: publicSelector_public.click(); Reporter.log("Making the list public."); break;
+			case 0: publicSelector_private.click(); Reporter.log("INFO: Making the list private.", true); break;
+			case 1: publicSelector_public.click(); Reporter.log("INFO: Making the list public.", true); break;
 		}
 		
-		Assert.assertTrue(sortSelector.isDisplayed(), "Error: Ascending/Descending sort selector was not found.");
+		Assert.assertTrue(sortSelector.isDisplayed(), "ERROR: Ascending/Descending sort selector was not found.");
 		sortSelector.click();
 		
-		Assert.assertTrue(sortSelector_originasc.isDisplayed(), "Error: Original ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_origindesc.isDisplayed(), "Error: Original descending sort option was not found.");
-		Assert.assertTrue(sortSelector_voteasc.isDisplayed(), "Error: Rating ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_votedesc.isDisplayed(), "Error: Rating descending sort was not found.");
-		Assert.assertTrue(sortSelector_relasc.isDisplayed(), "Error: Release ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_reldesc.isDisplayed(), "Error: Release descending sort option was not found.");
-		Assert.assertTrue(sortSelector_titleasc.isDisplayed(), "Error: Title ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_titledesc.isDisplayed(), "Error: Title descending sort was not found.");
+		Assert.assertTrue(sortSelector_originasc.isDisplayed(), "ERROR: Original ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_origindesc.isDisplayed(), "ERROR: Original descending sort option was not found.");
+		Assert.assertTrue(sortSelector_voteasc.isDisplayed(), "ERROR: Rating ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_votedesc.isDisplayed(), "ERROR: Rating descending sort was not found.");
+		Assert.assertTrue(sortSelector_relasc.isDisplayed(), "ERROR: Release ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_reldesc.isDisplayed(), "ERROR: Release descending sort option was not found.");
+		Assert.assertTrue(sortSelector_titleasc.isDisplayed(), "ERROR: Title ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_titledesc.isDisplayed(), "ERROR: Title descending sort was not found.");
 		
 		rad = r.nextInt(7);
 		
 		switch(rad) {
-			case 0: sortSelector_originasc.click(); Reporter.log("Sorting the list order by: orginal ascending"); break;
-			case 1: sortSelector_origindesc.click(); Reporter.log("Sorting the list order by: orginal descending"); break;
-			case 2: sortSelector_voteasc.click(); Reporter.log("Sorting the list order by: rating ascending"); break;
-			case 3: sortSelector_votedesc.click(); Reporter.log("Sorting the list order by: rating descending"); break;
-			case 4: sortSelector_relasc.click(); Reporter.log("Sorting the list order by: release ascending"); break;
-			case 5: sortSelector_reldesc.click(); Reporter.log("Sorting the list order by: release descending"); break;
-			case 6: sortSelector_titleasc.click(); Reporter.log("Sorting the list order by: title ascending"); break;
-			case 7: sortSelector_titledesc.click(); Reporter.log("Sorting the list order by: title descending"); break;
+			case 0: sortSelector_originasc.click(); Reporter.log("INFO: Sorting the list order by: orginal ascending", true); break;
+			case 1: sortSelector_origindesc.click(); Reporter.log("INFO: Sorting the list order by: orginal descending", true); break;
+			case 2: sortSelector_voteasc.click(); Reporter.log("INFO: Sorting the list order by: rating ascending", true); break;
+			case 3: sortSelector_votedesc.click(); Reporter.log("INFO: Sorting the list order by: rating descending", true); break;
+			case 4: sortSelector_relasc.click(); Reporter.log("INFO: Sorting the list order by: release ascending", true); break;
+			case 5: sortSelector_reldesc.click(); Reporter.log("INFO: Sorting the list order by: release descending", true); break;
+			case 6: sortSelector_titleasc.click(); Reporter.log("INFO: Sorting the list order by: title ascending", true); break;
+			case 7: sortSelector_titledesc.click(); Reporter.log("INFO: Sorting the list order by: title descending", true); break;
 			
 		}
 		
-		Assert.assertTrue(submitButton.isDisplayed(), "Error: Continue button was not found.");
+		Assert.assertTrue(submitButton.isDisplayed(), "ERROR: Continue button was not found.");
 		submitButton.click();
 		
-		Reporter.log("Saving the list: myList"+(lst+1));
+		Reporter.log("INFO: Saving the list: myList"+(lst+1), true);
 		
 		wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(deleteList));
@@ -191,79 +191,79 @@ class Lists {
 	
 	public void updateList() {
 		
-		Assert.assertTrue(editList.isDisplayed(), "Error: Edit List link was not found.");
+		Assert.assertTrue(editList.isDisplayed(), "ERROR: Edit List link was not found.");
 		editList.click();
 		
-		Assert.assertTrue(nameInput.isDisplayed(), "Error: List Name input was not found.");
+		Assert.assertTrue(nameInput.isDisplayed(), "ERROR: List Name input was not found.");
 		String name = nameInput.getAttribute("value");
-		Reporter.log("Updating list: "+name);
+		Reporter.log("INFO: Updating list: "+name, true);
 		
 		name = name.replace("myList", "myNewListName");
 		nameInput.clear();
 		nameInput.sendKeys(name);
-		Reporter.log("Changing the list title to: "+name);
+		Reporter.log("INFO: Changing the list title to: "+name, true);
 		
-		Assert.assertTrue(descriptionInput.isDisplayed(), "Error: List Description input was not found.");
+		Assert.assertTrue(descriptionInput.isDisplayed(), "ERROR: List Description input was not found.");
 		String description = descriptionInput.getAttribute("innerHTML");
-		description = description.replace("Description for My List", "New description for My List");
+		description = description.replace("Description", "New description"); description = description.replace("description", "new description");
 		descriptionInput.clear();
 		descriptionInput.sendKeys(description);
-		Reporter.log("Changing the list description to: "+description);
+		Reporter.log("INFO: Changing the list description to: "+description, true);
 		
-		Assert.assertTrue(publicSelector.isDisplayed(), "Error: Public/Private selector was not found.");
+		Assert.assertTrue(publicSelector.isDisplayed(), "ERROR: Public/Private selector was not found.");
 		publicSelector.click();
 		
-		Assert.assertTrue(publicSelector_private.isDisplayed(), "Error: Private option was not found.");
-		Assert.assertTrue(publicSelector_public.isDisplayed(), "Error: Public option was not found.");
+		Assert.assertTrue(publicSelector_private.isDisplayed(), "ERROR: Private option was not found.");
+		Assert.assertTrue(publicSelector_public.isDisplayed(), "ERROR: Public option was not found.");
 		
 		int rad = r.nextInt(1);
 		
 		switch(rad) {
-		case 0: publicSelector_private.click(); Reporter.log("Changing the list to private."); break;
-		case 1: publicSelector_public.click(); Reporter.log("Changing the list to public."); break;
+		case 0: publicSelector_private.click(); Reporter.log("INFO: Changing the list to private.", true); break;
+		case 1: publicSelector_public.click(); Reporter.log("INFO: Changing the list to public.", true); break;
 		}
 		
-		Assert.assertTrue(sortSelector.isDisplayed(), "Error: Ascending/Descending sort selector was not found.");
+		Assert.assertTrue(sortSelector.isDisplayed(), "ERROR: Ascending/Descending sort selector was not found.");
 		sortSelector.click();
 		
-		Assert.assertTrue(sortSelector_originasc.isDisplayed(), "Error: Original ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_origindesc.isDisplayed(), "Error: Original descending sort option was not found.");
-		Assert.assertTrue(sortSelector_voteasc.isDisplayed(), "Error: Rating ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_votedesc.isDisplayed(), "Error: Rating descending sort was not found.");
-		Assert.assertTrue(sortSelector_relasc.isDisplayed(), "Error: Release ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_reldesc.isDisplayed(), "Error: Release descending sort option was not found.");
-		Assert.assertTrue(sortSelector_titleasc.isDisplayed(), "Error: Title ascending sort option was not found.");
-		Assert.assertTrue(sortSelector_titledesc.isDisplayed(), "Error: Title descending sort was not found.");
+		Assert.assertTrue(sortSelector_originasc.isDisplayed(), "ERROR: Original ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_origindesc.isDisplayed(), "ERROR: Original descending sort option was not found.");
+		Assert.assertTrue(sortSelector_voteasc.isDisplayed(), "ERROR: Rating ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_votedesc.isDisplayed(), "ERROR: Rating descending sort was not found.");
+		Assert.assertTrue(sortSelector_relasc.isDisplayed(), "ERROR: Release ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_reldesc.isDisplayed(), "ERROR: Release descending sort option was not found.");
+		Assert.assertTrue(sortSelector_titleasc.isDisplayed(), "ERROR: Title ascending sort option was not found.");
+		Assert.assertTrue(sortSelector_titledesc.isDisplayed(), "ERROR: Title descending sort was not found.");
 		
 		rad = r.nextInt(7);
 		
 		switch(rad) {
-		case 0: sortSelector_originasc.click(); Reporter.log("Changing the list order to: orginal ascending"); break;
-		case 1: sortSelector_origindesc.click(); Reporter.log("Changing the list order to: orginal descending"); break;
-		case 2: sortSelector_voteasc.click(); Reporter.log("Changing the list order to: rating ascending"); break;
-		case 3: sortSelector_votedesc.click(); Reporter.log("Changing the list order to: rating descending"); break;
-		case 4: sortSelector_relasc.click(); Reporter.log("Changing the list order to: release ascending"); break;
-		case 5: sortSelector_reldesc.click(); Reporter.log("Changing the list order to: release descending"); break;
-		case 6: sortSelector_titleasc.click(); Reporter.log("Changing the list order to: title ascending"); break;
-		case 7: sortSelector_titledesc.click(); Reporter.log("Changing the list order to: title descending"); break;
+		case 0: sortSelector_originasc.click(); Reporter.log("INFO: Changing the list order to: orginal ascending", true); break;
+		case 1: sortSelector_origindesc.click(); Reporter.log("INFO: Changing the list order to: orginal descending", true); break;
+		case 2: sortSelector_voteasc.click(); Reporter.log("INFO: Changing the list order to: rating ascending", true); break;
+		case 3: sortSelector_votedesc.click(); Reporter.log("INFO: Changing the list order to: rating descending", true); break;
+		case 4: sortSelector_relasc.click(); Reporter.log("INFO: Changing the list order to: release ascending", true); break;
+		case 5: sortSelector_reldesc.click(); Reporter.log("INFO: Changing the list order to: release descending", true); break;
+		case 6: sortSelector_titleasc.click(); Reporter.log("INFO: Changing the list order to: title ascending", true); break;
+		case 7: sortSelector_titledesc.click(); Reporter.log("INFO: Changing the list order to: title descending", true); break;
 			
 		}
 		
-		Assert.assertTrue(submitButton.isDisplayed(), "Error: Save button was not found.");
+		Assert.assertTrue(submitButton.isDisplayed(), "ERROR: Save button was not found.");
 		submitButton.click();
 		
-		Reporter.log("Saving changes to list: "+name);
+		Reporter.log("INFO: Saving changes to list: "+name, true);
 		
 	}
 	
 	public void addFilms() {
 				
-		Assert.assertTrue(searchInput.isDisplayed(), "Error: Input search bar was not found.");
+		Assert.assertTrue(searchInput.isDisplayed(), "ERROR: Input search bar was not found.");
 		
 		wait = new WebDriverWait(driver, 30);
 		
 		int rad = r.nextInt(11)+3;
-		Reporter.log("Adding "+rad+" new films to the list.");
+		Reporter.log("INFO: Adding "+rad+" new films to the list.", true);
 		
 		int[] indices = new int[rad];
 		int numOfFilms = films.length-1;
@@ -284,14 +284,14 @@ class Lists {
 			
 			wait.until(ExpectedConditions.visibilityOf(successPopup));
 			
-			Reporter.log("Film "+(i+1)+" to add: "+films[rad]+".");
+			Reporter.log("INFO: Film "+(i+1)+" to add: "+films[rad]+".", true);
 			
 			searchInput.clear();
 			
 			indices[i] = rad;
 		}
 		
-		Reporter.log("Completed adding films to the list.");
+		Reporter.log("INFO: Completed adding films to the list.", true);
 		
 	}
 	
@@ -302,18 +302,18 @@ class Lists {
 	
 	public void deleteList() {
 		
-		Reporter.log("Deleting the film list.");
+		Reporter.log("INFO: Deleting the film list.", true);
 		
-		Assert.assertTrue(deleteList.isDisplayed(), "Error: Delete List link was not found.");
+		Assert.assertTrue(deleteList.isDisplayed(), "ERROR: Delete List link was not found.");
 		deleteList.click();
 		
-		Assert.assertTrue(deleteListButton.isDisplayed(), "Error: Delete Button was not found.");
+		Assert.assertTrue(deleteListButton.isDisplayed(), "ERROR: Delete Button was not found.");
 		deleteListButton.click();
 		
-		Assert.assertTrue(deleteConfirmButton.isDisplayed(), "Error: Confirm Delete Button was not found.");
+		Assert.assertTrue(deleteConfirmButton.isDisplayed(), "ERROR: Confirm Delete Button was not found.");
 		deleteConfirmButton.click();
 		
-		Reporter.log("Deleted the film list.");
+		Reporter.log("INFO: Deleted the film list.", true);
 		
 		wait.until(ExpectedConditions.invisibilityOf(deleteConfirmButton));
 		
