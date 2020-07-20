@@ -7,6 +7,7 @@ import org.testng.Reporter;
 import org.testng.Assert;
 
 import java.util.Random;
+import java.util.List;
 
 class Lists {
 	
@@ -75,6 +76,9 @@ class Lists {
 	
 	@FindBy(xpath = "//div[contains(@class, 'notification success')]")
 	WebElement successPopup;
+	
+	@FindBy(xpath = "//span[contains(@class, 'circle-remove')]")
+	List<WebElement> removeFilms;
 	
 	@FindBy(xpath = "//li/child::a[contains(@href, 'step_1')]")
 	WebElement editList;
@@ -256,7 +260,7 @@ class Lists {
 		
 	}
 	
-	public void addFilms() {
+	public void addFilms(){
 				
 		Assert.assertTrue(searchInput.isDisplayed(), "ERROR: Input search bar was not found.");
 		
@@ -278,15 +282,23 @@ class Lists {
 			
 			searchInput.sendKeys(films[rad]);
 			
+			Reporter.log("INFO: Searching for: "+films[rad], true);
+			
 			wait.until(ExpectedConditions.visibilityOf(searchResult));
 			
 			searchResult.click();
 			
+			Reporter.log("INFO: Film "+(i+1)+" added: "+films[rad]+" added.", true);
+			
 			wait.until(ExpectedConditions.visibilityOf(successPopup));
 			
-			Reporter.log("INFO: Film "+(i+1)+" to add: "+films[rad]+".", true);
+			try {
+				Thread.sleep(700);
+			} catch (InterruptedException e) {
+				Reporter.log("Interrupted Exception: "+e, true);
+			}
 			
-			searchInput.clear();
+			//wait.until(ExpectedConditions.invisibilityOf(successPopup));
 			
 			indices[i] = rad;
 		}
@@ -296,6 +308,36 @@ class Lists {
 	}
 	
 	public void removeFilms() {
+		
+		Reporter.log("INFO: Removing films from list.", true);
+		
+		Assert.assertTrue(editItems.isDisplayed(), "ERROR: Add/Edit Items link was not found.");
+		editItems.click();
+		
+		wait.until(ExpectedConditions.visibilityOf(removeFilms.get(0)));
+		
+		int c = removeFilms.size();
+		
+		for(int i=0; i<c; i++) {
+			
+			removeFilms.get(0).click();
+			Reporter.log("INFO: Removing film "+(c-i)+" from list.", true);
+			
+			if(i!=c-1) {
+				
+				try {
+					Reporter.log("INFO: Waiting for the success popup notification to disappear.", true);
+					Thread.sleep(5000);
+					//wait.until(ExpectedConditions.invisibilityOf(successPopup));
+				} catch (InterruptedException e) {
+					Reporter.log("Interrupted Exception: "+e, true);
+				}
+				
+			}
+			
+		}
+		
+		Reporter.log("INFO: All films removed from list.", true);
 		
 		
 	}
@@ -315,7 +357,7 @@ class Lists {
 		
 		Reporter.log("INFO: Deleted the film list.", true);
 		
-		wait.until(ExpectedConditions.invisibilityOf(deleteConfirmButton));
+		wait.until(ExpectedConditions.visibilityOf(newListButton));
 		
 	}
 	

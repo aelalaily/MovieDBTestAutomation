@@ -9,7 +9,7 @@ public class TestAutomation {
 	static final String homepage = "https://www.themoviedb.org/";
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
 		String OS = System.getProperty("os.name");
 		
@@ -43,8 +43,9 @@ public class TestAutomation {
 		
 		myList.openLists();
 		myList.createList();
-		//myList.addFilms();
+		myList.addFilms();
 		myList.updateList();
+		myList.removeFilms();
 		myList.deleteList();
 		
 		loginPage.logout();
